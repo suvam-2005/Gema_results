@@ -1,0 +1,187 @@
+{
+  "config": "configs/gemma_independent_benchmark.yaml",
+  "model": "google/gemma-4-26b-a4b-it",
+  "task_set_sha256": "31ccc0b035de3fde4483f1ff6609e5de3a59293d7f908e47ba8122c4f323748c",
+  "conditions": {
+    "L0": {
+      "condition": "L0",
+      "run_id": [
+        "independent_benchmark_v1_gemma4_26b_a4b"
+      ],
+      "experiment_ids": [
+        "097c2647-4fd6-46d0-aa9f-626b9626b85b"
+      ],
+      "model": [
+        "google/gemma-4-26b-a4b-it"
+      ],
+      "provider": [
+        "openrouter"
+      ],
+      "temperature": [
+        0
+      ],
+      "guardrail_version": [
+        "None"
+      ],
+      "git_commit": [
+        "dc8c95a7fbcc2ea3e70da01af92162574b4586d1"
+      ],
+      "configuration_hash": [
+        "3cfe9eb28e2fb982a75c73513e994a89f0d816e5fd913a5c87d63e1625e59630"
+      ],
+      "n_tasks": 32,
+      "n_unique_task_ids": 32,
+      "timestamp_min": 1793161755.896127,
+      "timestamp_max": 1793161979.7680757
+    },
+    "L1": {
+      "condition": "L1",
+      "run_id": [
+        "independent_benchmark_v1_gemma4_26b_a4b"
+      ],
+      "experiment_ids": [
+        "c49edbcd-8b76-4343-add2-fe7ebdd1c0cd"
+      ],
+      "model": [
+        "google/gemma-4-26b-a4b-it"
+      ],
+      "provider": [
+        "openrouter"
+      ],
+      "temperature": [
+        0
+      ],
+      "guardrail_version": [
+        "L1-v1"
+      ],
+      "git_commit": [
+        "dc8c95a7fbcc2ea3e70da01af92162574b4586d1"
+      ],
+      "configuration_hash": [
+        "3cfe9eb28e2fb982a75c73513e994a89f0d816e5fd913a5c87d63e1625e59630"
+      ],
+      "n_tasks": 32,
+      "n_unique_task_ids": 32,
+      "timestamp_min": 1793161987.431656,
+      "timestamp_max": 1793162232.1387732
+    },
+    "L2": {
+      "condition": "L2",
+      "run_id": [
+        "independent_benchmark_v1_gemma4_26b_a4b"
+      ],
+      "experiment_ids": [
+        "468af395-ddfc-4924-bae9-9e1a2c28d629"
+      ],
+      "model": [
+        "google/gemma-4-26b-a4b-it"
+      ],
+      "provider": [
+        "openrouter"
+      ],
+      "temperature": [
+        0
+      ],
+      "guardrail_version": [
+        "L2-v1"
+      ],
+      "git_commit": [
+        "dc8c95a7fbcc2ea3e70da01af92162574b4586d1"
+      ],
+      "configuration_hash": [
+        "3cfe9eb28e2fb982a75c73513e994a89f0d816e5fd913a5c87d63e1625e59630"
+      ],
+      "n_tasks": 32,
+      "n_unique_task_ids": 32,
+      "timestamp_min": 1793162239.6383967,
+      "timestamp_max": 1793162455.736601
+    },
+    "L3": {
+      "condition": "L3",
+      "run_id": [
+        "independent_benchmark_v1_gemma4_26b_a4b"
+      ],
+      "experiment_ids": [
+        "705f2502-e9a0-4a75-97ff-2ce015afab9d"
+      ],
+      "model": [
+        "google/gemma-4-26b-a4b-it"
+      ],
+      "provider": [
+        "openrouter"
+      ],
+      "temperature": [
+        0
+      ],
+      "guardrail_version": [
+        "L3-v1"
+      ],
+      "git_commit": [
+        "dc8c95a7fbcc2ea3e70da01af92162574b4586d1"
+      ],
+      "configuration_hash": [
+        "3cfe9eb28e2fb982a75c73513e994a89f0d816e5fd913a5c87d63e1625e59630"
+      ],
+      "n_tasks": 32,
+      "n_unique_task_ids": 32,
+      "timestamp_min": 1793162462.8341627,
+      "timestamp_max": 1793162672.3354151
+    },
+    "L4": {
+      "condition": "L4",
+      "run_id": [
+        "independent_benchmark_v1_gemma4_26b_a4b"
+      ],
+      "experiment_ids": [
+        "699059a8-31cf-44ef-994f-ff88c3667153"
+      ],
+      "model": [
+        "google/gemma-4-26b-a4b-it"
+      ],
+      "provider": [
+        "openrouter"
+      ],
+      "temperature": [
+        0
+      ],
+      "guardrail_version": [
+        "L4-v2"
+      ],
+      "git_commit": [
+        "dc8c95a7fbcc2ea3e70da01af92162574b4586d1"
+      ],
+      "configuration_hash": [
+        "3cfe9eb28e2fb982a75c73513e994a89f0d816e5fd913a5c87d63e1625e59630"
+      ],
+      "n_tasks": 32,
+      "n_unique_task_ids": 32,
+      "timestamp_min": 1793162676.8008454,
+      "timestamp_max": 1793162791.8957179
+    }
+  },
+  "project_ledger_cumulative_usd": 0.19618753650000179,
+  "project_ledger_api_calls": 1673,
+  "gemma_benchmark_spend_usd": 0.03936697650000001,
+  "benchmark_hard_cap_usd": 8.0,
+  "remaining_gemma_benchmark_budget_usd": 7.9606330235,
+  "raw_data_paths": [
+    "data/gemma_benchmark/raw/L0.jsonl",
+    "data/gemma_benchmark/raw/L1.jsonl",
+    "data/gemma_benchmark/raw/L2.jsonl",
+    "data/gemma_benchmark/raw/L3.jsonl",
+    "data/gemma_benchmark/raw/L4.jsonl"
+  ],
+  "trajectory_paths": [
+    "data/gemma_benchmark/raw/trajectories/L0/",
+    "data/gemma_benchmark/raw/trajectories/L1/",
+    "data/gemma_benchmark/raw/trajectories/L2/",
+    "data/gemma_benchmark/raw/trajectories/L3/",
+    "data/gemma_benchmark/raw/trajectories/L4/"
+  ],
+  "processed_data_dir": "data/gemma_benchmark/processed/",
+  "statistics_dir": "data/gemma_benchmark/statistics/",
+  "figures_dirs": [
+    "figures/",
+    "outcome_figures/"
+  ]
+}

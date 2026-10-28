@@ -1,0 +1,307 @@
+{
+  "result_kind_note": "OUR_RESULT unless explicitly marked REFERENCE_RESULT",
+  "benchmark_name": "Independent Interactive Cognitive-Age Benchmark (NOT ChildAgentEval)",
+  "model": "google/gemma-4-26b-a4b-it",
+  "n_tasks": 32,
+  "n_conditions": 5,
+  "n_total_task_runs": 160,
+  "by_condition": {
+    "L0": {
+      "accuracy": 0.59375,
+      "n_correct": 19,
+      "n_tasks": 32,
+      "alignment": 0.534375,
+      "interventions": 0,
+      "intervention_triggers": {},
+      "api_calls_total_steps": 152,
+      "total_tokens": 110330,
+      "cost_usd": 0.008855614500000001,
+      "errors": 0,
+      "recoveries": 0
+    },
+    "L1": {
+      "accuracy": 0.625,
+      "n_correct": 20,
+      "n_tasks": 32,
+      "alignment": 0.525,
+      "interventions": 0,
+      "intervention_triggers": {},
+      "api_calls_total_steps": 152,
+      "total_tokens": 109398,
+      "cost_usd": 0.0087843165,
+      "errors": 0,
+      "recoveries": 0
+    },
+    "L2": {
+      "accuracy": 0.53125,
+      "n_correct": 17,
+      "n_tasks": 32,
+      "alignment": 0.528125,
+      "interventions": 0,
+      "intervention_triggers": {},
+      "api_calls_total_steps": 152,
+      "total_tokens": 109253,
+      "cost_usd": 0.008773224,
+      "errors": 0,
+      "recoveries": 0
+    },
+    "L3": {
+      "accuracy": 0.59375,
+      "n_correct": 19,
+      "n_tasks": 32,
+      "alignment": 0.534375,
+      "interventions": 64,
+      "intervention_triggers": {
+        "repeated_action": 57,
+        "excessive_steps": 7
+      },
+      "api_calls_total_steps": 143,
+      "total_tokens": 102369,
+      "cost_usd": 0.008221251,
+      "errors": 0,
+      "recoveries": 0
+    },
+    "L4": {
+      "accuracy": 0.5625,
+      "n_correct": 18,
+      "n_tasks": 32,
+      "alignment": 0.51875,
+      "interventions": 30,
+      "intervention_triggers": {
+        "repeated_action": 30
+      },
+      "api_calls_total_steps": 72,
+      "total_tokens": 51216,
+      "cost_usd": 0.0041133030000000004,
+      "errors": 0,
+      "recoveries": 0
+    }
+  },
+  "per_age_correct_of_8": {
+    "L0": {
+      "7": 5,
+      "10": 4,
+      "13": 5,
+      "16": 5
+    },
+    "L1": {
+      "7": 6,
+      "10": 4,
+      "13": 5,
+      "16": 5
+    },
+    "L2": {
+      "7": 4,
+      "10": 4,
+      "13": 4,
+      "16": 5
+    },
+    "L3": {
+      "7": 5,
+      "10": 4,
+      "13": 5,
+      "16": 5
+    },
+    "L4": {
+      "7": 5,
+      "10": 4,
+      "13": 4,
+      "16": 5
+    }
+  },
+  "per_category_accuracy": {
+    "L0": {
+      "abstraction": 1.0,
+      "integrated_reasoning": 1.0,
+      "language": 1.0,
+      "planning": 0.0,
+      "processing_behavior": 1.0,
+      "reasoning": 0.5,
+      "visual_spatial": 0.25,
+      "working_memory": 0.0
+    },
+    "L1": {
+      "abstraction": 1.0,
+      "integrated_reasoning": 1.0,
+      "language": 1.0,
+      "planning": 0.0,
+      "processing_behavior": 1.0,
+      "reasoning": 0.5,
+      "visual_spatial": 0.5,
+      "working_memory": 0.0
+    },
+    "L2": {
+      "abstraction": 1.0,
+      "integrated_reasoning": 0.75,
+      "language": 1.0,
+      "planning": 0.0,
+      "processing_behavior": 1.0,
+      "reasoning": 0.25,
+      "visual_spatial": 0.25,
+      "working_memory": 0.0
+    },
+    "L3": {
+      "abstraction": 1.0,
+      "integrated_reasoning": 1.0,
+      "language": 1.0,
+      "planning": 0.0,
+      "processing_behavior": 1.0,
+      "reasoning": 0.5,
+      "visual_spatial": 0.25,
+      "working_memory": 0.0
+    },
+    "L4": {
+      "abstraction": 1.0,
+      "integrated_reasoning": 1.0,
+      "language": 1.0,
+      "planning": 0.0,
+      "processing_behavior": 1.0,
+      "reasoning": 0.25,
+      "visual_spatial": 0.25,
+      "working_memory": 0.0
+    }
+  },
+  "efficiency_vs_l0": {
+    "L0": {
+      "steps": 152,
+      "steps_pct_change": 0.0,
+      "cost_usd": 0.008855614500000001,
+      "cost_pct_change": 0.0
+    },
+    "L1": {
+      "steps": 152,
+      "steps_pct_change": 0.0,
+      "cost_usd": 0.0087843165,
+      "cost_pct_change": -0.81
+    },
+    "L2": {
+      "steps": 152,
+      "steps_pct_change": 0.0,
+      "cost_usd": 0.008773224,
+      "cost_pct_change": -0.93
+    },
+    "L3": {
+      "steps": 143,
+      "steps_pct_change": -5.92,
+      "cost_usd": 0.008221251,
+      "cost_pct_change": -7.16
+    },
+    "L4": {
+      "steps": 72,
+      "steps_pct_change": -52.63,
+      "cost_usd": 0.0041133030000000004,
+      "cost_pct_change": -53.55
+    }
+  },
+  "l4_vs_l3_efficiency": {
+    "steps_pct_change": -49.65,
+    "cost_pct_change": -49.97,
+    "tokens_pct_change": -49.97
+  },
+  "statistical_evidence": {
+    "comparison": "paired, n=32 tasks; L0 vs L1/L2/L3/L4 and L3 vs L4",
+    "comparisons": {
+      "L0_vs_L1": {
+        "mean_difference": 0.03125,
+        "p_value": 0.8008095851476071,
+        "discordant_pairs": 1,
+        "incorrect_to_correct": [
+          "visual_spatial_age7_v1"
+        ],
+        "correct_to_incorrect": []
+      },
+      "L0_vs_L2": {
+        "mean_difference": -0.0625,
+        "p_value": 0.6191869569287847,
+        "discordant_pairs": 2,
+        "incorrect_to_correct": [],
+        "correct_to_incorrect": [
+          "integrated_age7_v1",
+          "reasoning_age13_v1"
+        ]
+      },
+      "L0_vs_L3": {
+        "mean_difference": 0.0,
+        "p_value": 1.0,
+        "discordant_pairs": 0,
+        "incorrect_to_correct": [],
+        "correct_to_incorrect": []
+      },
+      "L0_vs_L4": {
+        "mean_difference": -0.03125,
+        "p_value": 0.8031694439743124,
+        "discordant_pairs": 1,
+        "incorrect_to_correct": [],
+        "correct_to_incorrect": [
+          "reasoning_age13_v1"
+        ]
+      },
+      "L3_vs_L4": {
+        "mean_difference": -0.03125,
+        "p_value": 0.8031694439743124,
+        "discordant_pairs": 1,
+        "incorrect_to_correct": [],
+        "correct_to_incorrect": [
+          "reasoning_age13_v1"
+        ]
+      }
+    },
+    "multiple_comparison": {
+      "method": "bonferroni",
+      "family": "L0 vs L1/L2/L3/L4",
+      "raw_p_values": {
+        "L1": 0.8008095851476071,
+        "L2": 0.6191869569287847,
+        "L3": 1.0,
+        "L4": 0.8031694439743124
+      },
+      "adjusted_p_values": {
+        "L1": 1.0,
+        "L2": 1.0,
+        "L3": 1.0,
+        "L4": 1.0
+      },
+      "rejected_at_0.05": {
+        "L1": false,
+        "L2": false,
+        "L3": false,
+        "L4": false
+      }
+    }
+  },
+  "reference_paper_result_gemma_baseline": {
+    "source": "arXiv:2605.17894, Section 5/5.1 Table 2, confidence=low (single extraction pass)",
+    "model_in_paper": "gemma-4-31b",
+    "scores_by_age": {
+      "7": 0.28,
+      "10": 0.29,
+      "13": 0.27,
+      "16": 0.25
+    },
+    "note": "The paper evaluated Gemma-4-31B, not Gemma 4 26B A4B, and on a different scale/metric. Context only."
+  },
+  "cost_summary_usd": {
+    "gemma_benchmark_spend": 0.03936697650000001,
+    "gemma_benchmark_spend_note": "includes the 2-task L0 smoke test (data/gemma_benchmark/smoke/), charged to the L0 ledger",
+    "benchmark_hard_cap": 8.0,
+    "project_lifetime_cumulative_spend": 0.19618753650000179,
+    "project_lifetime_api_calls": 1673,
+    "final_benchmark_inference_calls": 671
+  },
+  "test_suite": {
+    "passed": 297,
+    "total": 297
+  },
+  "provenance": {
+    "config": "configs/gemma_independent_benchmark.yaml",
+    "raw_data": [
+      "data/gemma_benchmark/raw/L0.jsonl",
+      "data/gemma_benchmark/raw/L1.jsonl",
+      "data/gemma_benchmark/raw/L2.jsonl",
+      "data/gemma_benchmark/raw/L3.jsonl",
+      "data/gemma_benchmark/raw/L4.jsonl"
+    ],
+    "processed_data_dir": "data/gemma_benchmark/processed/",
+    "reproducibility_manifest": "reproducibility_manifest.json"
+  }
+}

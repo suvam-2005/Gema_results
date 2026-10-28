@@ -1,0 +1,12 @@
+{
+  "1": "Figure 1. Reference paper's reported age trajectory for Gemma-4-31B (the paper did not evaluate Gemma 4 26B A4B). X-axis: target age (7, 10, 13, 16). Y-axis: reference total composite score (paper's own scale; low confidence, single extraction pass \u2014 see reference/reference_results.json). No CIs reported by the paper (n=4).",
+  "2": "Figure 2. Reference vs our L0 (contextual comparison only). Reference: the paper's composite score for Gemma-4-31B; ours: independent-benchmark binary accuracy for Gemma 4 26B A4B, n=8 tasks per age. Different model variant, item set and scoring \u2014 not statistically comparable.",
+  "3": "Figure 3. L0 vs L1 vs L2 vs L3 vs L4 cognitive alignment (PRIMARY). Y-axis: independent alignment score [0,1] (independent_alignment.py formula), mean across 4 ages. Error bars = SEM across n=4 ages.",
+  "4": "Figure 4. L0-L4 task capability. Y-axis: fraction of the 32 tasks answered correctly [0,1]. Error bars = SEM of the binary per-task scores, n=32 tasks per condition.",
+  "5": "Figure 5. Alignment vs capability retention, one point per condition (L0-L4). X-axis: accuracy divided by L0 accuracy. Y-axis: alignment score [0,1]. Coinciding points overlap exactly.",
+  "6": "Figure 6. Per-age L0-L4 comparison. Y-axis: accuracy, n=8 tasks per age per condition. One line per condition; overlapping lines indicate identical values.",
+  "7": "Figure 7. Per-category performance. Y-axis: accuracy, n=4 tasks per category per condition. One bar series per condition (L0-L4).",
+  "8": "Figure 8. Guardrail intervention rate, L0-L4. Y-axis: interventions / total steps [0,1], over all 32 tasks' full step counts per condition.",
+  "9": "Figure 9. Errors / recoveries / trajectory length, L0-L4. Counts of malformed-output errors and recoveries, and mean steps per task, n=32 tasks per condition.",
+  "10": "Figure 10. Inference cost and token consumption, L0-L4 (two panels). Direct sums of recorded usage over 32 tasks, not sampled statistics \u2014 no error bars."
+}

@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gemma Guardrail Study</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --page-bg: #ffffff;
+    --ink: #1c1f24;
+    --sub: #55606b;
+    --accent: #2e9e6b;
+    --accent2: #4c8bf5;
+    --warn: #e05a4e;
+    --border: #e4e7eb;
+    --tag-ref: #8a8f98;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  header.hero {
+    padding: 64px 24px 40px;
+    text-align: center;
+    background: linear-gradient(180deg, #10141c 0%, #232a36 100%);
+    color: white;
+  }
+  header.hero h1 {
+    font-size: 2.4rem;
+    margin: 0 0 8px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  header.hero h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #cfd6de;
+    margin: 0 0 20px;
+  }
+  header.hero .note {
+    max-width: 720px;
+    margin: 0 auto;
+    font-size: 0.92rem;
+    color: #9aa5b1;
+    border-top: 1px solid #333c48;
+    padding-top: 18px;
+  }
+  header.hero .note b { color: #e8ecf0; }
+
+  main { max-width: 900px; margin: 0 auto; padding: 32px 16px 80px; }
+
+  section.page {
+    background: var(--page-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 40px;
+    margin-bottom: 28px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  section.page .pagenum {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--sub);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  section.page h2.title {
+    font-size: 1.5rem;
+    margin: 0 0 18px;
+    font-weight: 800;
+  }
+  section.page h3.headline {
+    font-size: 1.25rem;
+    margin: 20px 0 10px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  section.page p { color: #333; font-size: 1.02rem; }
+  section.page ul, section.page ol { color: #333; font-size: 1rem; }
+
+  .diagram {
+    background: #f7f9fb;
+    border: 1px dashed #c6ccd3;
+    border-radius: 10px;
+    padding: 18px;
+    font-family: "Cascadia Code", Consolas, monospace;
+    font-size: 0.85rem;
+    color: #333;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 16px 0;
+  }
+
+  table.levels {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.95rem;
+  }
+  table.levels th, table.levels td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.levels th { background: #f7f9fb; font-weight: 700; }
+  table.levels tr:nth-child(odd) td { background: #fbfcfd; }
+
+  figure { margin: 20px 0; text-align: center; }
+  figure img {
+    max-width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  figure figcaption {
+    font-size: 0.85rem;
+    color: var(--sub);
+    margin-top: 8px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin-right: 6px;
+  }
+  .tag.ref { background: #eceef1; color: var(--tag-ref); }
+  .tag.hyp { background: #fff3e0; color: #a06400; }
+  .tag.our { background: #e7f6ee; color: #1d7a4c; }
+
+  .callout {
+    border-left: 4px solid var(--accent2);
+    background: #f2f7ff;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 0.95rem;
+  }
+  .callout.warn { border-left-color: var(--warn); background: #fdf1f0; }
+
+  .definition {
+    background: #f7f9fb;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin: 12px 0;
+    font-size: 0.92rem;
+    border: 1px solid var(--border);
+  }
+  .definition b { color: var(--accent2); }
+
+  footer {
+    text-align: center;
+    color: var(--sub);
+    font-size: 0.85rem;
+    padding: 20px;
+  }
+
+  @media print {
+    body { background: white; }
+    section.page { break-inside: avoid; box-shadow: none; border: none; page-break-after: always; }
+    header.hero { break-after: page; }
+  }
+</style>
+<body>
+
+<header class="hero">
+  <h1>Can Cognitive Guardrails Change AI Behavior?</h1>
+  <h2>An Experimental Study with Gemma 4 26B A4B &mdash; L0 through L4</h2>
+  <p class="note">
+    This is an <b>independent, original benchmark</b> inspired by the publicly described
+    research direction of the ChildAgentEval paper. It is <b>not a reproduction of
+    ChildAgentEval</b>: the official benchmark's tasks and scoring were never released
+    publicly. It is the same 32-task benchmark and the same guardrails previously run on
+    Qwen3.5-27B, now run on a second model. Wherever this document shows a number from the
+    original paper, it is marked <b>REFERENCE PAPER RESULT</b>.
+  </p>
+</header>
+
+<main>
+
+<section class="page">
+  <div class="pagenum">Page 2</div>
+  <h2 class="title">The Research Question</h2>
+  <p><b>Do supervision systems ("guardrails") change what an AI agent actually does, or
+  only how it gets there &mdash; and does the answer hold for a second model?</b></p>
+  <div class="diagram">   AI Agent  --works on-->  Task  --produces-->  Behavior
+                                                      |
+                                      Guardrail watches / intervenes
+                                                      |
+                                                      v
+                                                   Outcome</div>
+  <p>We gave Gemma 4 26B A4B the same 32 tasks and the same five levels of supervision
+  (L0&ndash;L4) used for Qwen3.5-27B, and measured what changed: <b>the answers it gave</b>,
+  and <b>the path it took to get there</b>.</p>
+</section>
+
+<section class="page">
+  <div class="pagenum">Page 3</div>
+  <h2 class="title">Why This Matters</h2>
+  <p>AI agents are increasingly trusted to click buttons, fill in forms and complete
+  multi-step tasks on their own. If you add a layer that checks the agent's output, its
+  actions, or its overall behaviour, does the agent actually perform better, or does it just
+  look more supervised?</p>
+  <p>The first study answered this for one model. A finding that holds on only one model
+  could be a quirk of that model, so the second model is the first test of whether it
+  generalises.</p>
+  <div class="callout">This study repeats the measurement on a second, architecturally
+  different model (a mixture-of-experts model with about 4 billion active parameters per
+  step), under the same controlled conditions.</div>
+</section>
+
+<section class="page">
+  <div class="pagenum">Page 4</div>
+  <h2 class="title">What We Built</h2>
+  <div class="diagram"> Gemma 4 26B A4B  -->  Browser (Playwright)  -->  32 original tasks
+                                                           |
+                                        L0 / L1 / L2 / L3 / L4 guardrail layer
+                                                           |
+                                                           v
+                                          Accuracy + Alignment + Cost + Steps</div>
+  <ul>
+    <li><b>Model:</b> Gemma 4 26B A4B (<code>google/gemma-4-26b-a4b-it</code>) via
+      OpenRouter, the same settings every run (temperature 0).</li>
+    <li><b>Environment:</b> a real Chromium browser, driven step by step by the model
+      through generic click/type/select actions.</li>
+    <li><b>Benchmark:</b> the same 32 original tasks as the Qwen study: 8 cognitive
+      categories at 4 target ages (7, 10, 13, 16), one task per category per age. We checked
+      that Gemma saw exactly the same pages Qwen saw, on all 32 tasks.</li>
+    <li><b>Guardrails:</b> five supervision conditions, all run and reported together.</li>
+    <li><b>Measurement:</b> every step, guardrail decision, token and dollar was logged
+      automatically and scored afterwards.</li>
+  </ul>
+</section>
+
+<section class="page">
+  <div class="pagenum">Page 5</div>
+  <h2 class="title">What Are L0, L1, L2, L3, L4?</h2>
+  <p>Think of them as increasing levels of a supervisor watching someone do a job:</p>
+  <table class="levels">
+    <tr><th>Level</th><th>Analogy</th><th>What it actually checks</th></tr>
+    <tr><td><b>L0</b></td><td>No supervisor</td><td>Nothing. The agent works alone.</td></tr>
+    <tr><td><b>L1</b></td><td>Answer checker</td><td>Rejects malformed or broken output <i>format</i> before it's used.</td></tr>
+    <tr><td><b>L2</b></td><td>Action checker</td><td>Rejects invalid or clearly premature <i>actions</i> (e.g. giving up on step 1).</td></tr>
+    <tr><td><b>L3</b></td><td>Process supervisor</td><td>Watches the <i>whole trajectory</i>: if the agent repeats itself, it inserts a pause; after 5 steps it ends the task.</td></tr>
+    <tr><td><b>L4</b></td><td>Stop-on-repeat supervisor</td><td>Same as L3, except that the moment the agent repeats itself, it ends the task immediately instead of pausing.</td></tr>
+  </table>
+  <p>L0 is the plain baseline every other condition is compared against.</p>
+  <div class="definition"><b>Guardrail</b>: an automatic check that inspects an AI
+  agent's output or behaviour and can reject, correct, or redirect it before it counts as
+  final.</div>
+</section>
+
+<section class="page">
+  <div class="pagenum">Page 6</div>
+  <h2 class="title">How the Experiment Worked</h2>
+  <ul>
+    <li><b>32 tasks &times; 5 conditions (L0&ndash;L4) = 160 task runs</b>, plus a 2-task
+      check run beforehand.</li>
+    <li>Every task was run once under each condition, one condition after another.</li>
+    <li>Everything was held identical across conditions <b>except which guardrail was
+      active</b>: same model, tasks, prompts, temperature, scoring rules and step budget.</li>
+    <li>All 160 runs completed in full, with no retries and no interruptions. Total cost:
+      <b>$0.039</b>.</li>
+  </ul>
+  <div class="definition"><b>Trajectory</b>: the full step-by-step sequence of actions an
+  agent takes while attempting a task.</div>
+  <div class="definition"><b>Baseline</b>: the no-intervention condition (L0) that every
+  other condition is compared against.</div>
+</section>
+
+<section class="page">
+  <div class="pagenum">Page 7 &middot; Primary Result</div>
+  <h2 class="title">Accuracy</h2>
+  <figure><img src="outcome_figures/fig01_accuracy.png" alt="Accuracy L0-L4"></figure>
+  <h3 class="headline">Accuracy moved slightly, but no guardrail caused the movement.</h3>
+  <p><span class="tag our">Our Result</span>L0 got <b>19 of 32</b> tasks right, L1 20, L2
+  17, L3 19 and L4 18. The giveaway is L1 and L2: they <b>never intervened once</b>, so the
+  agent under them behaved exactly as under L0, and yet they still scored differently.
+  Those differences can only come from the model itself giving different answers on
+  different runs (see Page 10). The one task L4 lost was a task where L4 never stepped
+  in.</p>
+</section>
+
+<section class="page">
+  <div class="pagenum">Page 8 &middot; Primary Result</div>
+  <h2 class="title">Cognitive Alignment</h2>
+  <figure><img src="outcome_figures/fig02_alignment.png" alt="Alignment L0-L4"></figure>
+  <h3 class="headline">No meaningful change in cognitive alignment.</h3>
+  <div class="definition"><b>Cognitive alignment</b>: our own measure of how closely an
+  agent's per-age performance tracks the difficulty curve the benchmark was designed around,
+  as a single [0, 1] score. It is <b>not the same scale or metric as the reference paper's
+  composite score</b>.</div>
+  <p><span class="tag our">Our Result</span>Alignment ranged from <b>0.519 to 0.534</b>
+  (L0 0.534, L1 0.525, L2 0.528, L3 0.534, L4 0.519). That spread is the same small
+  run-to-run wobble seen in accuracy, not a guardrail effect.</p>
+</section>
+
+<section class="page">
+  <div class="pagenum">Page 9 &middot; The Interesting Result</div>
+  <h2 class="title">L3 and L4: Efficiency</h2>
+  <figure><img src="outcome_figures/fig03_steps.png" alt="Steps L0-L4"></figure>
+  <figure><img src="outcome_figures/fig04_cost.png" alt="Cost L0-L4"></figure>
+  <figure><img src="outcome_figures/fig05_interventions.png" alt="Interventions L0-L4"></figure>
+  <h3 class="headline">L4 cut the work roughly in half, the same as it did for Qwen.</h3>
+  <p><span class="tag our">Our Result</span>Only L3 and L4 intervened: <b>64</b> and
+  <b>30</b> times, almost always because the agent clicked the same button again. Their
+  effect was on <i>efficiency</i>:</p>
+  <ul>
+    <li>L3: steps 152 &rarr; 143 (<b>5.9% fewer</b>), cost <b>7.2% lower</b></li>
+    <li>L4: steps 152 &rarr; 72 (<b>52.6% fewer</b>), cost $0.00886 &rarr; $0.00411
+      (<b>53.6% lower</b>); about half of L3's steps and cost</li>
+  </ul>
+  <p>L1 and L2 recorded <b>zero</b> interventions: Gemma never produced broken output or
+  an invalid action, so they had nothing to correct.</p>
+</section>
+
+<section class="page">
+  <div class="pagenum">Page 10</div>
+  <h2 class="title">Task-by-Task Result</h2>
+  <figure><img src="outcome_figures/fig06_task_outcome_matrix.png" alt="Task outcome matrix"></figure>
+  <h3 class="headline">29 of 32 tasks had the same result in every condition. The other 3
+  reflect the model's own variability.</h3>
+  <p>Unlike Qwen, Gemma does not give the same answer every time, even with randomness set
+  to its minimum (temperature 0). On some multiple-choice tasks it changes its mind
+  mid-task, and changes it differently each run. For one reasoning task it clicked
+  <code>c c d c</code> in one run and <code>b c c b</code> in another. Only the last click
+  counts, so these switches flip the score.</p>
+  <div class="callout">L0, L1 and L2 are effectively three repeat runs of the same
+  unsupervised agent. Between them, 3 tasks changed result and the score ranged from 17 to 20
+  out of 32. That is how much a single run of this model can move by chance, and every
+  difference between conditions in this study falls within it.</div>
+</section>
+
+<section class="page">
+  <div class="pagenum">Page 11</div>
+  <h2 class="title">What Does It Mean?</h2>
+  <h3 class="headline">What we found</h3>
+  <ul>
+    <li>No guardrail from L1 to L4 changed Gemma's accuracy or alignment by more than the
+      model's own run-to-run variability (paired comparisons, n = 32 tasks, all
+      p &ge; 0.62; 1.0 after correcting for multiple comparisons).</li>
+    <li>L4 again roughly halved the steps and cost, as it did for Qwen. That result carried
+      over to the second model.</li>
+    <li>Both models score 0% on the planning and working-memory tasks, for the same reason:
+      the agent isn't shown what it already clicked, so it keeps clicking the first item.</li>
+  </ul>
+  <h3 class="headline" style="color:var(--warn)">What we cannot claim</h3>
+  <div class="callout warn">
+    <ul>
+      <li>We cannot claim guardrails "don't work" in general, only that none of the four
+        tested changed outcomes measurably here.</li>
+      <li>We cannot treat these as a reproduction of ChildAgentEval, and the paper never
+        tested this exact Gemma model; the reference numbers are for Gemma-4-31B.</li>
+      <li>With one run per condition and a model that varies between runs, a small real
+        effect (a task or two) would be indistinguishable from chance.</li>
+    </ul>
+  </div>
+  <h3 class="headline" style="color:#a06400">What we learned</h3>
+  <p><span class="tag hyp">Hypothesis</span>Gemma's variability most likely comes from
+  OpenRouter routing requests to different servers, which don't guarantee identical output
+  even at temperature 0. This is plausible but not verified.</p>
+  <p><span class="tag hyp">Hypothesis</span>Because Gemma sometimes changes its answer
+  mid-task, a guardrail that ends a task early (L3/L4) can, in principle, change which answer
+  counts. That never happened with Qwen. It didn't affect any result in this run, but it
+  means L4 is no longer guaranteed to be outcome-neutral on this model.</p>
+</section>
+
+<section class="page">
+  <div class="pagenum">Page 12</div>
+  <h2 class="title">Limitations and Next Steps</h2>
+  <h3 class="headline" style="color:var(--warn)">Limitations</h3>
+  <ul>
+    <li>One run per condition, on a model whose results vary between runs.</li>
+    <li>32 tasks total (4 per category, 8 per age): limited statistical power.</li>
+    <li>L1 and L2 never fired, so their effect on this model is untested, not disproven.</li>
+    <li>An original benchmark, not a validated psychometric instrument.</li>
+    <li>The reference figures are for a different Gemma variant, at low confidence.</li>
+  </ul>
+  <h3 class="headline">What to test next</h3>
+  <ol>
+    <li>Repeat each condition several times (cheap: one full L0&ndash;L4 pass cost under
+      $0.04) to measure the variability properly and test for real effects.</li>
+    <li>Pin a single OpenRouter provider, or set a fixed random seed, to check whether the
+      variability goes away.</li>
+    <li>Give the agent its own action history, which would show whether the 0% on planning and
+      working memory comes from the harness or from the model (both models fail identically).</li>
+    <li>Run L5 on Gemma once the Qwen L5 design is settled.</li>
+  </ol>
+  <div class="callout"><b>Closing summary:</b> on a second model, supervision again changed
+  how efficiently the agent worked without measurably changing what it got right. The new
+  lesson is that this model's own run-to-run variability is as large as any effect we
+  measured, so future comparisons on it need repeated runs.</div>
+</section>
+
+<section class="page">
+  <div class="pagenum">Appendix</div>
+  <h2 class="title">Additional Data</h2>
+  <p>These four figures give context and breakdowns referenced above, using the same real
+  data.</p>
+
+  <h3 class="headline">A1. Reference paper trajectory <span class="tag ref">Reference Paper Result</span></h3>
+  <figure><img src="outcome_figures/fig07_reference_trajectory.png" alt="Reference trajectory"></figure>
+  <p>The paper's Gemma-4-31B baseline composite score by age (arXiv:2605.17894). The paper
+  did not test Gemma 4 26B A4B, so this is a related model, not the one run here, and the
+  values are low-confidence extractions. Context only.</p>
+
+  <h3 class="headline">A2. Reference vs. our L0, side by side</h3>
+  <figure><img src="outcome_figures/fig08_reference_vs_l0_separate_panels.png" alt="Reference vs L0"></figure>
+  <p>Deliberately shown as two separate panels, not overlaid: different models, item sets
+  and scoring systems. A shared axis would imply they are the same metric.</p>
+
+  <h3 class="headline">A3. Results by age group</h3>
+  <figure><img src="outcome_figures/fig09_per_age.png" alt="Per-age results"></figure>
+  <p>Correct of 8: L0 5/4/5/5, L1 6/4/5/5, L2 4/4/4/5, L3 5/4/5/5, L4 5/4/4/5 at ages
+  7/10/13/16. Ages 10 and 16 are identical across all five conditions.</p>
+
+  <h3 class="headline">A4. Results by task category</h3>
+  <figure><img src="outcome_figures/fig10_per_category.png" alt="Per-category results"></figure>
+  <p>Perfect scores in abstraction, language and processing behaviour in every condition
+  (and integrated reasoning in every condition except L2); zero in planning and working
+  memory in every condition. Reasoning (25&ndash;50%) and visual-spatial (25&ndash;50%) are
+  where the run-to-run variability shows up. Gemma did better than Qwen on reasoning (50%
+  vs 0% at L0) and worse on visual-spatial (25% vs 50%).</p>
+</section>
+
+</main>
+
+<footer>
+  Independent Interactive Cognitive-Age Benchmark &mdash; not ChildAgentEval &middot;
+  Gemma 4 26B A4B via OpenRouter &middot; Full technical report: benchmark_report.md
+</footer>
+
+</body>
+</html>
